@@ -18,7 +18,7 @@ secret2 := scrypt.Key("god", "magic", N, r, p, 32) // 32 bytes returned
 
 ### Acknowledgements
 
-Colin Percival
+Colin Percival and Tarsnap (I'd use it in a heartbeat)
 
 Go Crypto library
 
