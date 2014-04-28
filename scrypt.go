@@ -47,7 +47,7 @@ func Calibrate() error {
 
 // automatically calls Calibrate
 // keyLen is the result length, in bytess
-func KeyCalibrated(password, salt []byte, keyLen uint) (result []byte, N uint64, r, p uint32, err error) {
+func KeyCalibrated(password, salt []byte, keyLen int) (result []byte, N uint64, r, p uint32, err error) {
     if ! calibrated {
         err = Calibrate()
         if err != nil {
@@ -74,7 +74,7 @@ func size(buf []byte) C.size_t {
 
 // uncalibrated version
 // keyLen is the result length, in bytess
-func Key(password, salt []byte, N uint64, r, p uint32, keyLen uint) (result []byte, err error) {
+func Key(password, salt []byte, N uint64, r, p uint32, keyLen int) (result []byte, err error) {
     if N <= 1 || N&(N-1) != 0 {
         err = errors.New("scrypt: N must be > 1 and a power of 2")
         return
