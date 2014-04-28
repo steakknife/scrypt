@@ -13,7 +13,8 @@ type testVector struct {
 	password string
 	salt     string
 	N uint64
-	r, p  uint32
+	r uint32
+	p  uint32
 	output   []byte
 }
 
