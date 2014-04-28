@@ -12,7 +12,8 @@ import (
 type testVector struct {
 	password string
 	salt     string
-	N uint64, r, p  uint32
+	N uint64
+	r, p  uint32
 	output   []byte
 }
 
