@@ -15,7 +15,7 @@ const (
     DefaultMaxMem uint64 = 4*1024*1024 // 4 MiB
     DefaultMaxMemFrac float32 = 0.2       // 20% 
     DefaultMaxTime float32 = 0.08      // 80 ms
-    maxUInt32 = 1<<32 - 1
+    maxUint32 = 1<<32 - 1
     maxRP = 1<<30
 )
 
