@@ -79,7 +79,7 @@ func Key(password, salt []byte, N uint64, r, p uint32, keyLen uint) (result []by
         err = errors.New("scrypt: N must be > 1 and a power of 2")
         return
     }
-    if uint64(r)*uint64(p) >= maxRP || r > maxUint32/128/p || r > maxUint32/256 || N > maxUint32/128/r {
+    if uint64(r)*uint64(p) >= maxRP || r > maxUint32/128/p || r > maxUint32/256 || N > uint64(maxUint32/128/r) {
         err = errors.New("scrypt: parameters are too large")
         return
     }
