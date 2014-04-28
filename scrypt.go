@@ -15,7 +15,8 @@ const (
     DefaultMaxMem uint64 = 4*1024*1024 // 4 MiB
     DefaultMaxMemFrac float32 = 0.2       // 20% 
     DefaultMaxTime float32 = 0.08      // 80 ms
-    maxInt = int(^uint(0) >> 1)
+    maxUInt32 = 1<<32 - 1
+    maxRP = 1<<30
 )
 
 var (
@@ -46,14 +47,15 @@ func Calibrate() error {
 
 // automatically calls Calibrate
 // keyLen is the result length, in bytess
-func KeyCalibrated(password, salt []byte, keyLen int) (result []byte, err error) {
+func KeyCalibrated(password, salt []byte, keyLen uint) (result []byte, N uint64, r, p uint32, err error) {
     if ! calibrated {
         err = Calibrate()
         if err != nil {
             return
         }
     }
-    return Key(password, salt, int(calibrated_n), int(calibrated_r), int(calibrated_p), keyLen)
+    result, err = Key(password, salt, calibrated_n, calibrated_r, calibrated_p, keyLen)
+    N, r, p = uint64(calibrated_n), uint32(calibrated_r), uint32(calibrated_p)
 }
 
 var zero = []byte{0}
@@ -71,12 +73,12 @@ func size(buf []byte) C.size_t {
 
 // uncalibrated version
 // keyLen is the result length, in bytess
-func Key(password, salt []byte, N, r, p, keyLen int) (result []byte, err error) {
+func Key(password, salt []byte, N uint64, r, p uint32, keyLen uint) (result []byte, err error) {
     if N <= 1 || N&(N-1) != 0 {
         err = errors.New("scrypt: N must be > 1 and a power of 2")
         return
     }
-    if uint64(r)*uint64(p) >= 1<<30 || r > maxInt/128/p || r > maxInt/256 || N > maxInt/128/r {
+    if uint64(r)*uint64(p) >= maxRP || r > maxUint32/128/p || r > maxUint32/256 || N > maxUint32/128/r {
         err = errors.New("scrypt: parameters are too large")
         return
     }
@@ -93,8 +95,8 @@ func Key(password, salt []byte, N, r, p, keyLen int) (result []byte, err error) 
     buflen := C.size_t(keyLen)
 
     if C.crypto_scrypt(addr(password), size(password), addr(salt), size(salt),
-        C.uint64_t(N), C.uint32_t(r), C.uint32_t(p),
-        buf, buflen) != 0 {
+                       C.uint64_t(N), C.uint32_t(r), C.uint32_t(p),
+                       buf, buflen) != 0 {
         err = errors.New("scrypt error")
         return
     }
