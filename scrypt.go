@@ -56,6 +56,7 @@ func KeyCalibrated(password, salt []byte, keyLen uint) (result []byte, N uint64,
     }
     N, r, p = uint64(calibrated_n), uint32(calibrated_r), uint32(calibrated_p)
     result, err = Key(password, salt, N, r, p, keyLen)
+    return
 }
 
 var zero = []byte{0}
