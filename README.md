@@ -4,6 +4,10 @@
 
     go get github.com/steakknife/scrypt
 
+### Pseudoexample
+
+### Self-calibrating example (adapts to most future hardware/software advances)
+
 ```golang
 import "github.com/steakknife/scrypt"
 import "fmt"
@@ -17,17 +21,21 @@ func main() {
         }
         fmt.Printf("secret=%#v, N=%d, r=%d, p=%d", secret, N, r, p)
 }
+```
 
+### Another example (fixed calibration, not future-proof)
+
+```golang
 // N := ...
 // r := ...
 // p := ...
 secret2, err := scrypt.Key("god", "magic", N, r, p, 32) // 32 bytes returned
 ```
 
-### Acknowledgements
+## Acknowledgements
 
 Colin Percival and Tarsnap (I'd use it in a heartbeat)
 
 Go Crypto library
 
-### Patches welcome!
+## Patches welcome!
