@@ -36,6 +36,10 @@ secret2, err := scrypt.Key([]byte("god"), []byte("magic"), N, r, p, 32) // 32 by
 // ...
 ```
 
+## ProTip
+
+Don't want to bother compiling other people's (these examples) code?  Make it a [goscript](https://gist.github.com/8311240)!
+
 ## Acknowledgements
 
 Colin Percival and Tarsnap (I'd use it in a heartbeat)
