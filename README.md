@@ -4,7 +4,7 @@
 
     go get github.com/steakknife/scrypt
 
-### Pseudoexample
+## Pseudoexamples
 
 ### Self-calibrating example (adapts to most future hardware/software advances)
 
