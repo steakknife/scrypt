@@ -6,14 +6,22 @@
 
 ```golang
 import "github.com/steakknife/scrypt"
+import "fmt"
 
-// dont do this, it's an example
-secret := scrypt.KeyCalibrated("password", "salt", 16) // 16 bytes returned
+func main() {
+        // dont do this, it's an example
+        secret, N, r, p, err := scrypt.KeyCalibrated[]byte("password"), []byte("salt"), 16) // 16 bytes returned
+        
+        if err != nil {
+          panic(err)
+        }
+        fmt.Printf("secret=%#v, N=%d, r=%d, p=%d", secret, N, r, p)
+}
 
 // N := ...
 // r := ...
 // p := ...
-secret2 := scrypt.Key("god", "magic", N, r, p, 32) // 32 bytes returned
+secret2, err := scrypt.Key("god", "magic", N, r, p, 32) // 32 bytes returned
 ```
 
 ### Acknowledgements
