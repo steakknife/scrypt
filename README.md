@@ -13,7 +13,7 @@ import "github.com/steakknife/scrypt"
 import "fmt"
 
 func main() {
-        // dont do this, it's an example
+        // dont do this exactly, it's an example
         secret, N, r, p, err := scrypt.KeyCalibrated[]byte("password"), []byte("salt"), 16) // 16 bytes returned
         
         if err != nil {
@@ -26,10 +26,14 @@ func main() {
 ### Another example (fixed calibration, not future-proof)
 
 ```golang
-// N := ...
-// r := ...
-// p := ...
-secret2, err := scrypt.Key("god", "magic", N, r, p, 32) // 32 bytes returned
+// ...
+// Again, don't do this exactly 
+
+// N, r, p := ...
+
+secret2, err := scrypt.Key([]byte("god"), []byte("magic"), N, r, p, 32) // 32 bytes returned
+
+// ...
 ```
 
 ## Acknowledgements
